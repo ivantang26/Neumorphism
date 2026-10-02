@@ -1,0 +1,100 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: var(--target);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.toggle[data-stacked] {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.toggle[data-disabled] {
+  cursor: not-allowed;
+}
+
+.label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: 3.5rem;
+  height: 2rem;
+  flex: none;
+  border-radius: var(--radius-control);
+  background: var(--track);
+  border: var(--bw) solid var(--edge-strong);
+  box-shadow: var(--pressed-sm);
+  transition:
+    background-color var(--t-slide) var(--ease),
+    border-color var(--t-slide) var(--ease);
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  left: 0.1875rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.75rem;
+  border-radius: 50%;
+  background: var(--base);
+  border: var(--bw) solid var(--edge-strong);
+  box-shadow:
+    2px 2px 4px var(--shadow-dark),
+    -1px -1px 3px var(--shadow-light);
+  transition: transform var(--t-slide) var(--ease);
+}
+
+/* On: the track fills with --on and is bounded by --on-ink, which holds 3:1 against the page. */
+.toggle[data-on] .track {
+  background: var(--on);
+  border-color: var(--on-ink);
+}
+.toggle[data-on] .thumb {
+  transform: translateX(1.5rem);
+  border-color: var(--on-ink);
+}
+:global([data-contrast="more"]) .toggle[data-on] .thumb {
+  background: #ffffff;
+}
+
+.state {
+  min-width: 1.9em;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  color: var(--text-mute);
+}
+.toggle[data-on] .state {
+  color: var(--text);
+}
+
+.toggle[data-disabled] .track,
+.toggle[data-disabled] .thumb {
+  border-style: dashed;
+  box-shadow: none;
+}
+.toggle[data-disabled] .state,
+.toggle[data-disabled] .label {
+  color: var(--text-mute);
+}
+
+/* The real input is visually hidden, so the focus ring goes around the track. */
+.toggle:has(input:focus-visible) .track {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}

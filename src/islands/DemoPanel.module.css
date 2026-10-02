@@ -1,0 +1,64 @@
+.panel {
+  display: grid;
+  gap: var(--gap);
+}
+@media (min-width: 1000px) {
+  .panel {
+    grid-template-columns: 1.1fr 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.col {
+  display: grid;
+  gap: var(--gap);
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.title {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+.light {
+  display: grid;
+  gap: 0.25rem;
+}
+.light + .light {
+  padding-top: var(--gap);
+  border-top: 1px solid var(--edge);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+/* A small window that shows the blind position (decorative, the value is in the slider). */
+.window {
+  position: relative;
+  height: 9rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, #bcd6f5 0%, #e9f1fb 70%, #cfe3c2 70%, #b6d3a4 100%);
+  border: var(--bw) solid var(--edge-strong);
+  box-shadow: var(--pressed-sm);
+}
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 2px), var(--base) calc(50% - 2px), var(--base) calc(50% + 2px), transparent calc(50% + 2px));
+}
+.shade {
+  position: absolute;
+  inset: 0 0 auto;
+  background: repeating-linear-gradient(180deg, #d9dfe8 0 10px, #c7cfdb 10px 12px);
+  border-bottom: 3px solid var(--edge-strong);
+  transition: height var(--t-slide) var(--ease);
+}

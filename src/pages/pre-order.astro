@@ -1,0 +1,64 @@
+---
+import Site from "~/layouts/Site.astro";
+import HubRender from "~/components/HubRender.astro";
+import PreorderForm from "~/islands/PreorderForm";
+---
+<Site title="Pre-order Thermo" description="Reserve a Thermo hub from £179. Reserving is free, and you pay when it ships in early 2027.">
+  <div class="page wrap">
+    <div class="intro">
+      <h1>Pre-order Thermo</h1>
+      <p class="lede">Reserve a hub now. It's free to reserve, and we email you before taking any payment.</p>
+      <div class="shot"><HubRender /></div>
+      <ul class="facts" role="list">
+        <li><strong>Ships</strong> early 2027</li>
+        <li><strong>Delivery</strong> free in the UK</li>
+        <li><strong>Returns</strong> 60 days, no questions</li>
+      </ul>
+    </div>
+    <PreorderForm client:load />
+  </div>
+</Site>
+
+<style>
+  .page {
+    display: grid;
+    gap: 3rem;
+    padding-top: 2rem;
+  }
+  @media (min-width: 960px) {
+    .page {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+      align-items: start;
+    }
+    .intro {
+      position: sticky;
+      top: 2rem;
+    }
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.6rem + 2.5vw, 3.5rem);
+    line-height: 1.05;
+  }
+  .lede {
+    margin-top: 1rem;
+    color: var(--text-mute);
+    font-size: 1.1875rem;
+    max-width: 36ch;
+  }
+  .shot {
+    width: min(16rem, 70%);
+    margin: 2rem 0 1rem;
+  }
+  .facts {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-label);
+  }
+  .facts strong {
+    display: inline-block;
+    min-width: 6rem;
+  }
+</style>

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+data/*.json
+data/*.jsonl
+.env*
+.DS_Store

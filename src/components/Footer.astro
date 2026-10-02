@@ -1,0 +1,86 @@
+---
+import Logo from "./Logo.astro";
+import ContrastSwitch from "~/islands/ContrastSwitch";
+---
+<footer class="footer">
+  <div class="wrap inner">
+    <div class="brand">
+      <a href="/" class="home" aria-label="Thermo home"><Logo /><span>Thermo</span></a>
+      <p>Heating, lights and blinds, from one soft dial.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul role="list">
+        <li><a href="/how-it-works">How it works</a></li>
+        <li><a href="/pre-order">Pre-order</a></li>
+        <li><a href="/support">Support</a></li>
+        <li><a href="/support#accessibility">Accessibility</a></li>
+        <li><a href="/app">Dashboard demo</a></li>
+        <li><a href="/components">Component library</a></li>
+      </ul>
+    </nav>
+    <div class="switch">
+      <ContrastSwitch client:only="react" />
+      <p class="note">Also follows your device's contrast setting.</p>
+    </div>
+  </div>
+  <p class="wrap legal">Thermo is a fictional product made for a design portfolio. Nothing here can be bought.</p>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 5rem;
+    padding-block: 3rem 2rem;
+    box-shadow: inset 0 8px 16px -12px var(--shadow-dark);
+    border-top: var(--bw) solid var(--edge);
+  }
+  .inner {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .inner {
+      grid-template-columns: 1.3fr 1fr 1fr;
+      align-items: start;
+    }
+  }
+  .home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    min-height: var(--target);
+  }
+  .brand p,
+  .note,
+  .legal {
+    color: var(--text-mute);
+    font-size: var(--fs-label);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1rem;
+  }
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+    font-weight: 700;
+    color: var(--text);
+  }
+  .switch {
+    display: grid;
+    gap: 0.25rem;
+    justify-items: start;
+    min-height: 5rem;
+  }
+  .legal {
+    margin-top: 2rem;
+  }
+</style>

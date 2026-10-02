@@ -1,0 +1,52 @@
+---
+import Site from "~/layouts/Site.astro";
+import { ButtonLink } from "~/ui/Button";
+---
+<Site title="Reserved · Thermo" description="Your Thermo hub is reserved.">
+  <section class="done wrap" aria-labelledby="done-title">
+    <div class="card surface-raised">
+      <h1 id="done-title">Your hub is reserved</h1>
+      <p>Thank you. We've saved your reservation<span id="ref-line" hidden> with reference <strong id="ref" class="tabular"></strong></span>.</p>
+      <p>We'll email you before it ships to confirm your address and take payment. Nothing is charged until then.</p>
+      <div class="ctas">
+        <ButtonLink href="/app" variant="primary">Try the dashboard demo</ButtonLink>
+        <ButtonLink href="/">Back to home</ButtonLink>
+      </div>
+    </div>
+  </section>
+  <script>
+    const ref = new URLSearchParams(location.search).get("ref");
+    if (ref && /^TH-[A-Z0-9]{1,8}$/.test(ref)) {
+      document.getElementById("ref")!.textContent = ref;
+      document.getElementById("ref-line")!.hidden = false;
+    }
+  </script>
+</Site>
+
+<style>
+  .done {
+    padding-top: 3rem;
+  }
+  .card {
+    display: grid;
+    gap: 1rem;
+    max-width: 40rem;
+    padding: clamp(1.5rem, 1rem + 3vw, 3rem);
+  }
+  h1 {
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  p {
+    color: var(--text-mute);
+    font-size: 1.125rem;
+  }
+  p strong {
+    color: var(--text);
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    margin-top: 1rem;
+  }
+</style>

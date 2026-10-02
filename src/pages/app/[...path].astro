@@ -1,0 +1,26 @@
+---
+import Base from "~/layouts/Base.astro";
+import App from "~/app/App";
+import { ROOM_IDS } from "~/lib/home";
+
+// Every app URL is prerendered to the same shell; the client router takes over.
+export function getStaticPaths() {
+  return [
+    { params: { path: undefined } },
+    { params: { path: "settings" } },
+    ...ROOM_IDS.map((id) => ({ params: { path: `room/${id}` } })),
+  ];
+}
+---
+<Base title="Thermo" description="Control your heating, lights and blinds." app>
+  <App client:only="react" />
+  <noscript>
+    <p style="padding:2rem;font-weight:700">The Thermo dashboard needs JavaScript to talk to your hub.</p>
+  </noscript>
+  <script>
+    // Offline support for the installed app (PRD §8). Production only.
+    if (import.meta.env.PROD && "serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  </script>
+</Base>

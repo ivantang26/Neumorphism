@@ -1,0 +1,82 @@
+---
+interface Props {
+  items: { q: string; a: string }[];
+  headingLevel?: "h2" | "h3";
+}
+const { items } = Astro.props;
+---
+<div class="faq">
+  {items.map((item) => (
+    <details>
+      <summary>
+        <span>{item.q}</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq {
+    display: grid;
+    gap: var(--gap);
+  }
+  details {
+    border-radius: var(--radius-card);
+    background: var(--base);
+    border: var(--bw) solid var(--edge);
+    box-shadow: var(--raised-sm);
+  }
+  details[open] {
+    box-shadow: var(--pressed-sm);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: var(--target);
+    padding: 0.875rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--radius-card);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .sign {
+    position: relative;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: var(--bw) solid var(--edge-strong);
+    box-shadow: var(--raised-sm);
+  }
+  .sign::before,
+  .sign::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.75rem;
+    height: 2px;
+    margin: -1px 0 0 -0.375rem;
+    background: var(--text);
+    transition: transform var(--t-slide) var(--ease);
+  }
+  .sign::after {
+    transform: rotate(90deg);
+  }
+  details[open] .sign::after {
+    transform: rotate(0deg);
+  }
+  details p {
+    padding: 0 1.25rem 1.25rem;
+    color: var(--text-mute);
+    max-width: 65ch;
+  }
+</style>

@@ -1,0 +1,227 @@
+.editor {
+  display: grid;
+  gap: var(--gap);
+}
+
+.help {
+  color: var(--text-mute);
+  font-size: var(--fs-label);
+}
+
+/* The day needs width for blocks to be grabbable, so narrow screens scroll it sideways. */
+.scroller {
+  overflow-x: auto;
+  margin-inline: -1rem;
+  padding: 0.25rem 1rem 1rem;
+  scrollbar-width: thin;
+}
+.timeline {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 40rem;
+}
+
+.hours {
+  position: relative;
+  height: 1.25rem;
+  margin-inline: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-mute);
+}
+.hours span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+/* Inset 24-hour track. Blocks are raised pills sitting in it. */
+.track {
+  position: relative;
+  height: calc(var(--target) + 1.25rem);
+  border-radius: 1.25rem;
+  background: var(--base);
+  box-shadow: var(--pressed);
+  border: var(--bw) solid var(--edge-strong);
+  margin-inline: 0.75rem;
+  /* Inner padding so the pills don't touch the rim */
+  --pad: 0.625rem;
+}
+
+.tick {
+  position: absolute;
+  top: 30%;
+  bottom: 30%;
+  width: 1px;
+  background: var(--edge);
+}
+.tick[data-major] {
+  top: 15%;
+  bottom: 15%;
+  background: var(--edge-strong);
+}
+
+.now {
+  position: absolute;
+  top: -0.375rem;
+  bottom: -0.375rem;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--cool-ink);
+  z-index: 2;
+  pointer-events: none;
+}
+.now span {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--cool-ink);
+  display: none;
+}
+
+.block {
+  position: absolute;
+  top: var(--pad);
+  bottom: var(--pad);
+  display: flex;
+  z-index: 1;
+  touch-action: none;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0 0.25rem;
+  border-radius: 0.75rem;
+  border: var(--bw) solid var(--warm-ink);
+  background: var(--warm);
+  color: var(--on-warm-text);
+  box-shadow: var(--raised-sm);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  cursor: grab;
+  overflow: hidden;
+  white-space: nowrap;
+  touch-action: none;
+  transition: box-shadow var(--t-press) var(--ease);
+}
+.body:active {
+  cursor: grabbing;
+  box-shadow: var(--pressed-sm);
+}
+.block[data-selected] .body {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+.body:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.blockTime {
+  font-weight: 700;
+}
+
+/* Edge handles: slim to look at, wide to grab. */
+.handle {
+  position: absolute;
+  top: -0.375rem;
+  bottom: -0.375rem;
+  width: 1.5rem;
+  cursor: ew-resize;
+  touch-action: none;
+  z-index: 2;
+}
+.handle[data-edge="start"] {
+  left: -0.75rem;
+}
+.handle[data-edge="end"] {
+  right: -0.75rem;
+}
+.handle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.375rem;
+  height: 1.5rem;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--base);
+  border: var(--bw) solid var(--edge-strong);
+  opacity: 0;
+  transition: opacity var(--t-press);
+}
+.block[data-selected] .handle::after,
+.handle:hover::after {
+  opacity: 1;
+}
+
+.timeline[data-disabled] .body,
+.timeline[data-disabled] .handle {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.timeline[data-disabled] .body {
+  background: var(--track);
+  color: var(--text-mute);
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.controls {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.legend {
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: var(--fs-label);
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.25rem 1rem;
+}
+.stepLabel {
+  font-weight: 600;
+  color: var(--text-mute);
+  font-size: var(--fs-label);
+}
+.stepValue {
+  grid-row: 2;
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+.stepButtons {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  margin-top: 0.5rem;
+}
+
+.empty {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  color: var(--text-mute);
+}

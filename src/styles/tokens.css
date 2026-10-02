@@ -1,0 +1,166 @@
+/*
+ * Thermo design tokens. Values in the first block are the PRD §3 tokens verbatim.
+ * scripts/check-contrast.ts reads this file and fails the build if a pair drops
+ * below its WCAG target, in both the soft and high-contrast palettes.
+ *
+ * Why the extra "-ink" tokens: the PRD accents measure 2.1:1 (--warm), 2.7:1
+ * (--cool) and 1.95:1 (--on) against --base, which is below the 3:1 non-text
+ * minimum. They stay as fills, and anything that has to be *seen* as a boundary
+ * or indicator (focus ring, arc edge, active toggle track) uses the ink variant.
+ */
+
+/* [data-contrast="normal"] lets a demo panel show the soft palette inside high-contrast mode. */
+:root,
+[data-contrast="normal"] {
+  /* PRD §3 colour tokens */
+  --base: #e4e9f0;
+  --shadow-light: #ffffff;
+  --shadow-dark: #a9b4c4;
+  --edge: #b8c2d0; /* decorative hairline on cards only */
+  --edge-strong: #6f7a8e; /* 3.55:1, ring on every interactive control */
+  --text: #2a3342; /* 10.4:1 */
+  --text-mute: #56627a; /* 5.0:1 */
+  --warm: #ff7a45;
+  --cool: #3e8ef7;
+  --on: #2fbf71;
+
+  /* Accessible companions (same hues, >= 3:1 on --base) */
+  --warm-ink: #c2410c; /* 4.2:1 */
+  --cool-ink: #2563c9; /* 4.6:1, also passes as text */
+  --on-ink: #1e7a4a; /* 4.4:1 */
+  --focus: var(--cool-ink);
+  --error-text: #b03a0a; /* 5.0:1, warm hue that passes as body text */
+  --track: #d3dae4; /* pressed-in track floor */
+
+  /* Text drawn on accent fills */
+  --on-warm-text: var(--text); /* 4.9:1 on --warm */
+  --on-on-text: var(--text); /* 5.3:1 on --on */
+
+  /* Selected state (segmented control, pressed toggles) */
+  --selected-bg: var(--base);
+  --selected-text: var(--cool-ink);
+
+  /* PRD shadow tokens */
+  --raised: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+  --raised-sm: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  --pressed: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+  --pressed-sm: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+
+  /* Responsive: phone first (PRD §6) */
+  --shadow: var(--raised-sm);
+  --target: 3rem; /* 48px */
+  --gap: 1rem; /* 16px: shadows need room or they merge */
+  --bw: 1px; /* border width; 2px in high contrast */
+  --radius-card: 1.5rem;
+  --radius-control: 999px;
+
+  /* Motion (PRD §7) */
+  --t-press: 120ms;
+  --t-slide: 180ms;
+  --t-arc: 320ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Type (PRD §3) */
+  --font: "Nunito Variable", "Nunito", system-ui, sans-serif;
+  --fs-readout: clamp(3.5rem, 2.4rem + 3.5vw, 6rem);
+  --fs-room: clamp(1.25rem, 1.05rem + 0.6vw, 1.75rem);
+  --fs-label: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  --fs-headline: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  --fs-body: 1.0625rem;
+
+  color-scheme: light;
+}
+
+@media (min-width: 700px) {
+  :root,
+  [data-contrast="normal"] {
+    --shadow: var(--raised);
+    --target: 3.5rem; /* 56px on tablets, including the wall mount */
+    --gap: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 1200px) and (pointer: fine) {
+  :root {
+    --target: 2.75rem; /* 44px with a mouse */
+  }
+}
+
+/*
+ * High-contrast mode (FR-5). Soft shadows go, solid 2px borders and darker
+ * colours come in. Applied as [data-contrast="more"] by the head script, which
+ * follows prefers-contrast: more unless the user picked On or Off in Settings.
+ */
+[data-contrast="more"] {
+  --base: #f7f9fc;
+  --shadow-light: transparent;
+  --shadow-dark: transparent;
+  --edge: #1b2230;
+  --edge-strong: #1b2230;
+  --text: #0b111c;
+  --text-mute: #2a3342;
+  --warm: #a63a0b;
+  --cool: #0b4fb8;
+  --on: #0f6b3a;
+  --warm-ink: #a63a0b;
+  --cool-ink: #0b4fb8;
+  --on-ink: #0f6b3a;
+  --focus: #0b4fb8;
+  --error-text: #a63a0b;
+  --track: #f7f9fc;
+  --on-warm-text: #ffffff;
+  --on-on-text: #ffffff;
+  --selected-bg: #0b111c;
+  --selected-text: #ffffff;
+  --raised: none;
+  --raised-sm: none;
+  --pressed: none;
+  --pressed-sm: none;
+  --shadow: none;
+  --bw: 2px;
+}
+
+/* No-JS fallback for the same mode. Keep in sync with the block above. */
+@media (prefers-contrast: more) {
+  :root:not([data-contrast]) {
+    --base: #f7f9fc;
+    --shadow-light: transparent;
+    --shadow-dark: transparent;
+    --edge: #1b2230;
+    --edge-strong: #1b2230;
+    --text: #0b111c;
+    --text-mute: #2a3342;
+    --warm: #a63a0b;
+    --cool: #0b4fb8;
+    --on: #0f6b3a;
+    --warm-ink: #a63a0b;
+    --cool-ink: #0b4fb8;
+    --on-ink: #0f6b3a;
+    --focus: #0b4fb8;
+    --error-text: #a63a0b;
+    --track: #f7f9fc;
+    --on-warm-text: #ffffff;
+    --on-on-text: #ffffff;
+    --selected-bg: #0b111c;
+    --selected-text: #ffffff;
+    --raised: none;
+    --raised-sm: none;
+    --pressed: none;
+    --pressed-sm: none;
+    --shadow: none;
+    --bw: 2px;
+  }
+}
+
+/* Wall-tablet kiosk mode (FR-6): everything sized in rem grows by 20%. */
+:root[data-kiosk] {
+  font-size: 120%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-press: 0ms;
+    --t-slide: 0ms;
+    --t-arc: 0ms;
+  }
+}

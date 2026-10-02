@@ -1,0 +1,38 @@
+/* Dimmed wall tablet. Near-black so an LCD at night lights the hallway as little as possible. */
+.dim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.5rem;
+  background: rgb(8 11 18 / 0.94);
+  color: #c8d0dc;
+  cursor: pointer;
+  animation: dim-in 600ms ease-out;
+}
+.dim:focus-visible {
+  outline: none;
+}
+.time {
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+}
+.temp {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.hint {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #9aa6b8;
+}
+
+@keyframes dim-in {
+  from {
+    opacity: 0;
+  }
+}

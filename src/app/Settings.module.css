@@ -1,0 +1,65 @@
+.settings {
+  display: grid;
+  gap: var(--gap);
+  align-content: start;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+.title {
+  flex: 1;
+  font-size: var(--fs-room);
+  font-weight: 700;
+}
+
+.section {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: stretch;
+}
+.section > button {
+  justify-self: start;
+}
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.help {
+  color: var(--text-mute);
+  font-size: var(--fs-label);
+  max-width: 60ch;
+}
+.help strong {
+  color: var(--text);
+}
+
+.divider {
+  height: 1px;
+  background: var(--edge);
+  margin-block: 0.5rem;
+}
+
+.facts {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+.facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.facts dt {
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.facts dd {
+  margin: 0;
+  font-weight: 800;
+}

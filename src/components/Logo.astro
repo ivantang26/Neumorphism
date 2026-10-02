@@ -1,0 +1,17 @@
+---
+// Thermo mark: a dial ring with its arc. Simple geometry, drawn in the page's own tokens.
+---
+<svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+  <circle cx="16" cy="16" r="15" fill="var(--base)" stroke="var(--edge-strong)" stroke-width="1.5"></circle>
+  <path d="M8.2 23.8 A11 11 0 1 1 23.8 23.8" fill="none" stroke="var(--track)" stroke-width="4" stroke-linecap="round"></path>
+  <path d="M8.2 23.8 A11 11 0 0 1 21.5 6.5" fill="none" stroke="var(--warm-ink)" stroke-width="4" stroke-linecap="round"></path>
+  <circle cx="16" cy="16" r="5" fill="var(--text)"></circle>
+</svg>
+
+<style>
+  .mark {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+</style>

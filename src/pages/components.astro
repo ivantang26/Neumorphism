@@ -1,0 +1,31 @@
+---
+import Site from "~/layouts/Site.astro";
+import ComponentGallery from "~/islands/ComponentGallery";
+---
+<Site title="Component library · Thermo" description="Thermo's soft UI components: dial, toggle, slider, segmented control, button and card.">
+  <div class="page wrap">
+    <h1>Component library</h1>
+    <p class="lede">
+      The soft UI set used by the dashboard and this site. Each one meets 3:1 at its edge, has a text label, and works
+      with a keyboard. Switch on high contrast at the bottom of the page to see the other palette.
+    </p>
+    <ComponentGallery client:load />
+  </div>
+</Site>
+
+<style>
+  .page {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 2rem;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.6rem + 2.5vw, 3.5rem);
+  }
+  .lede {
+    color: var(--text-mute);
+    font-size: 1.1875rem;
+    max-width: 62ch;
+    margin-bottom: 1rem;
+  }
+</style>

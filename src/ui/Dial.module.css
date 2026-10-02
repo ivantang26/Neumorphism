@@ -1,0 +1,198 @@
+/* Sizes are the PRD §6 diameters. */
+.dial {
+  --size: 260px;
+  --arc: var(--warm);
+  --arc-ink: var(--warm-ink);
+  display: grid;
+  justify-items: center;
+  gap: var(--gap);
+}
+@media (min-width: 700px) {
+  .dial {
+    --size: 360px;
+  }
+  :global([data-kiosk]) .dial[data-size="main"] {
+    --size: 440px;
+  }
+}
+@media (min-width: 1200px) {
+  .dial[data-size="main"] {
+    --size: 320px;
+  }
+  :global([data-kiosk]) .dial[data-size="main"] {
+    --size: 380px;
+  }
+}
+.dial[data-size="room"] {
+  --size: 240px;
+}
+@media (min-width: 700px) {
+  .dial[data-size="room"] {
+    --size: 280px;
+  }
+}
+.dial[data-size="demo"] {
+  --size: min(300px, 78vw);
+}
+@media (min-width: 700px) {
+  .dial[data-size="demo"] {
+    --size: 340px;
+  }
+}
+
+.dial[data-tone="cool"] {
+  --arc: var(--cool);
+  --arc-ink: var(--cool-ink);
+}
+.dial[data-tone="off"] {
+  --arc: var(--track);
+  --arc-ink: var(--edge-strong);
+}
+
+.face {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--base);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--raised);
+}
+.face:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* The ring captures touch for dragging; the centre (a sibling) still lets the page scroll. */
+  touch-action: none;
+  cursor: grab;
+}
+.svg[data-dragging] {
+  cursor: grabbing;
+}
+
+.track,
+.trackEdge,
+.arc,
+.arcEdge {
+  fill: none;
+  stroke-linecap: round;
+}
+.trackEdge {
+  stroke: var(--edge-strong);
+  stroke-width: 22;
+}
+.track {
+  stroke: var(--track);
+  stroke-width: 19;
+}
+.arcEdge,
+.arc {
+  stroke-dasharray: 100 100;
+  transition: stroke-dashoffset var(--t-arc) var(--ease);
+}
+.arcEdge {
+  stroke: var(--arc-ink);
+  stroke-width: 22;
+}
+.arc {
+  stroke: var(--arc);
+  stroke-width: 16;
+}
+
+.endLabel {
+  fill: var(--text-mute);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.knob {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  transition: transform var(--t-arc) var(--ease);
+}
+.svg[data-dragging] .knob,
+.svg[data-dragging] .arc,
+.svg[data-dragging] .arcEdge {
+  transition: none;
+}
+.knobBody {
+  fill: var(--base);
+  stroke: var(--edge-strong);
+  stroke-width: 2;
+}
+.knobDot {
+  fill: var(--arc-ink);
+}
+
+/* Pressed-in centre with the readout. Not part of the drag area. */
+.center {
+  position: absolute;
+  inset: 22%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  border-radius: 50%;
+  background: var(--base);
+  box-shadow: var(--pressed);
+  border: var(--bw) solid var(--edge);
+  text-align: center;
+  touch-action: auto;
+  user-select: none;
+}
+
+.caption {
+  font-size: calc(var(--size) * 0.05);
+  font-weight: 700;
+  color: var(--text-mute);
+  line-height: 1.2;
+}
+.readout {
+  font-size: calc(var(--size) * 0.17);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.dial[data-size="main"] .readout {
+  /* PRD type scale: 56px on phones up to 96px on wide screens */
+  font-size: clamp(3.5rem, calc(var(--size) * 0.19), 6rem);
+}
+.unit {
+  font-size: 0.34em;
+  font-weight: 700;
+  vertical-align: 0.9em;
+  margin-left: 0.05em;
+}
+.now {
+  margin-top: 0.25rem;
+  font-size: calc(var(--size) * 0.05);
+  font-weight: 700;
+  color: var(--text-mute);
+}
+.dial[data-size="main"] .caption,
+.dial[data-size="main"] .now {
+  font-size: max(0.9375rem, calc(var(--size) * 0.048));
+}
+
+.buttons {
+  display: flex;
+  gap: var(--gap);
+}
+
+.dial[data-disabled] .svg {
+  cursor: not-allowed;
+}
+.dial[data-disabled] .trackEdge {
+  stroke-dasharray: 4 4;
+}
+
+:global([data-contrast="more"]) .face,
+:global([data-contrast="more"]) .center {
+  border-color: var(--edge-strong);
+}

@@ -1,0 +1,43 @@
+{
+  "name": "thermo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Thermo: a (fictional) smart home hub. Neumorphic landing page and accessible control dashboard for heating, lights and blinds.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run check:contrast && astro build && npm run check:budget",
+    "preview": "tsx scripts/serve.ts",
+    "test": "vitest run",
+    "check": "astro check",
+    "check:contrast": "tsx scripts/check-contrast.ts",
+    "check:budget": "tsx scripts/check-budget.ts",
+    "make:icons": "tsx scripts/make-icons.ts"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.0",
+    "@fontsource-variable/nunito": "^5.3.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "astro": "^7.3.5",
+    "react": "^19.3.0",
+    "react-aria": "^3.52.1",
+    "react-dom": "^19.3.0",
+    "react-stately": "^3.50.0",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/ws": "^8.18.2",
+    "axe-core": "^4.13.0",
+    "jsdom": "^29.1.1",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

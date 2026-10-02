@@ -1,0 +1,122 @@
+.slider {
+  --thumb: calc(var(--target) - 0.5rem);
+  --r: calc(var(--thumb) / 2);
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+.icon {
+  display: inline-flex;
+  font-size: 1.25em;
+  color: var(--text-mute);
+}
+
+.value {
+  font-size: var(--fs-label);
+  font-weight: 800;
+}
+
+/*
+ * The track element is the area the thumb's centre travels across (React Aria
+ * measures it). It is inset by the thumb radius so the thumb never overhangs,
+ * and it is a full touch target tall. The visible rail stretches back out.
+ */
+.track {
+  position: relative;
+  height: var(--target);
+  margin-inline: var(--r);
+  touch-action: none;
+  cursor: pointer;
+}
+
+.rail {
+  position: absolute;
+  left: calc(-1 * var(--r));
+  right: calc(-1 * var(--r));
+  top: 50%;
+  height: 1rem;
+  transform: translateY(-50%);
+  border-radius: var(--radius-control);
+  background: var(--track);
+  border: var(--bw) solid var(--edge-strong);
+  box-shadow: var(--pressed-sm);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: calc(var(--r) + var(--t) * (100% - 2 * var(--r)));
+  background: var(--fill);
+  border-right: var(--bw) solid var(--fill-edge);
+}
+
+.slider[data-tone="cool"] {
+  --fill: var(--cool);
+  --fill-edge: var(--cool-ink);
+}
+.slider[data-tone="warm"] {
+  --fill: var(--warm);
+  --fill-edge: var(--warm-ink);
+}
+.slider[data-tone="on"] {
+  --fill: var(--on);
+  --fill-edge: var(--on-ink);
+}
+.slider[data-tone="light"] {
+  --fill: #ffd27a;
+  --fill-edge: #8a5a00;
+}
+:global([data-contrast="more"]) .slider[data-tone="light"] {
+  --fill: #8a5a00;
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  width: var(--thumb);
+  height: var(--thumb);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--base);
+  border: var(--bw) solid var(--edge-strong);
+  box-shadow: var(--raised-sm);
+  transition: box-shadow var(--t-press) var(--ease);
+}
+.thumb[data-dragging] {
+  box-shadow: var(--pressed-sm);
+}
+.thumb[data-focus] {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.slider[data-disabled] .track {
+  cursor: not-allowed;
+}
+.slider[data-disabled] .thumb,
+.slider[data-disabled] .rail {
+  border-style: dashed;
+  box-shadow: none;
+}
+.slider[data-disabled] .fill {
+  background: var(--track);
+}
+.slider[data-disabled] .label,
+.slider[data-disabled] .value {
+  color: var(--text-mute);
+}

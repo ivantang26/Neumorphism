@@ -1,0 +1,31 @@
+---
+import "~/styles/global.css";
+import { PREFS_HEAD_SCRIPT } from "~/lib/prefs";
+
+interface Props {
+  title: string;
+  description: string;
+  /** The web app (enables kiosk mode and the PWA start URL). */
+  app?: boolean;
+}
+const { title, description, app = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en-GB" data-app={app ? "" : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#e4e9f0" />
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <script is:inline set:html={PREFS_HEAD_SCRIPT} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

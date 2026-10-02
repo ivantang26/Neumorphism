@@ -1,0 +1,42 @@
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.spec {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--pressed);
+}
+.title {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.stage {
+  display: grid;
+  gap: 1rem;
+  justify-items: stretch;
+  padding: 0.5rem 0;
+}
+.note {
+  color: var(--text-mute);
+  font-size: 0.9375rem;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+.demoCard {
+  min-width: 8rem;
+  font-weight: 700;
+}

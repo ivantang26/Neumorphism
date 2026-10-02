@@ -1,0 +1,28 @@
+.compare {
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 820px) {
+  .compare {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sample {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--base);
+  color: var(--text);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--shadow);
+}
+.sample[data-contrast="more"] {
+  border-color: var(--edge-strong);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 800;
+}

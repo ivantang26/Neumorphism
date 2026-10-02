@@ -1,0 +1,145 @@
+---
+import Site from "~/layouts/Site.astro";
+import Faq from "~/components/Faq.astro";
+import { EnvelopeIcon as Envelope, LifebuoyIcon as Lifebuoy, WheelchairIcon as Wheelchair, WrenchIcon as Wrench } from "@phosphor-icons/react/ssr";
+
+const topics = [
+  {
+    title: "Getting started",
+    icon: Wrench,
+    items: [
+      {
+        q: "Which wires does the hub need?",
+        a: "For most combi boilers, the two wires from your old thermostat. The Thermo app shows a photo guide for your boiler model before you touch anything.",
+      },
+      {
+        q: "How do I add a light or blind?",
+        a: "Pairing happens in the Thermo phone app. Scan the Matter code on the device and it appears on every screen within a few seconds.",
+      },
+    ],
+  },
+  {
+    title: "Connection problems",
+    icon: Lifebuoy,
+    items: [
+      {
+        q: "The dashboard says Offline",
+        a: "It is showing the last state it knew, and controls are paused so nothing gets out of step. The hub still runs your schedules. Check your Wi-Fi, then press Try again.",
+      },
+      {
+        q: "A change I made was undone",
+        a: "The device didn't confirm it, so Thermo put the control back to how it really is and told you. That usually means a radiator valve's battery is low or it is out of range.",
+      },
+    ],
+  },
+];
+---
+<Site title="Support · Thermo" description="Help with setting up Thermo, connection problems, and accessibility.">
+  <div class="page wrap">
+    <h1>Support</h1>
+    <p class="lede">Answers to common questions, and a person to talk to if they don't help.</p>
+
+    <div class="topics">
+      {topics.map((t) => (
+        <section aria-labelledby={`t-${t.title.toLowerCase().replace(/ /g, "-")}`} class="topic">
+          <h2 id={`t-${t.title.toLowerCase().replace(/ /g, "-")}`}>
+            <span class="well" aria-hidden="true"><t.icon weight="bold" /></span>
+            {t.title}
+          </h2>
+          <Faq items={t.items} />
+        </section>
+      ))}
+    </div>
+
+    <section id="accessibility" class="a11y surface-raised" aria-labelledby="a11y-title">
+      <h2 id="a11y-title">
+        <span class="well" aria-hidden="true"><Wheelchair weight="bold" /></span>
+        Accessibility
+      </h2>
+      <p>
+        Thermo aims to meet WCAG 2.2 AA on every screen. Soft UI is known for low contrast, so we treat that as a
+        requirement rather than an afterthought:
+      </p>
+      <ul>
+        <li>Every control has a visible text label, and toggles say On or Off in words.</li>
+        <li>Every control has a darker edge ring that stands out at 3:1 or more against the background.</li>
+        <li>High-contrast mode replaces shadows with solid borders. It follows your device setting, or you can turn it on in Settings or at the bottom of this page.</li>
+        <li>The temperature dial works by dragging, with Cooler and Warmer buttons, with arrow keys, and with screen readers.</li>
+        <li>The schedule can be edited with buttons as well as by dragging.</li>
+      </ul>
+      <p>If something doesn't work for you, please tell us and we'll fix it.</p>
+    </section>
+
+    <section class="contact surface-pressed" aria-labelledby="contact-title">
+      <h2 id="contact-title">
+        <span class="well" aria-hidden="true"><Envelope weight="bold" /></span>
+        Talk to us
+      </h2>
+      <p>Email <a href="mailto:help@thermo.example">help@thermo.example</a>. A person replies within one working day.</p>
+    </section>
+  </div>
+</Site>
+
+<style>
+  .page {
+    display: grid;
+    gap: 2.5rem;
+    padding-top: 2rem;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.6rem + 2.5vw, 3.5rem);
+  }
+  .lede {
+    margin-top: -1.5rem;
+    color: var(--text-mute);
+    font-size: 1.1875rem;
+  }
+  .topics {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .topics {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--fs-room);
+    margin-bottom: 1rem;
+  }
+  .well {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border-radius: 50%;
+    font-size: 1.375rem;
+    color: var(--cool-ink);
+    box-shadow: var(--pressed-sm);
+    border: var(--bw) solid var(--edge);
+  }
+  .a11y,
+  .contact {
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    max-width: 56rem;
+  }
+  .a11y p,
+  .a11y li,
+  .contact p {
+    max-width: 65ch;
+  }
+  .a11y ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+  }
+  .contact .well {
+    box-shadow: var(--raised-sm);
+  }
+</style>

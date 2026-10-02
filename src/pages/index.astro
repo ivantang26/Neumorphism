@@ -1,0 +1,461 @@
+---
+import Site from "~/layouts/Site.astro";
+import HubRender from "~/components/HubRender.astro";
+import Faq from "~/components/Faq.astro";
+import DemoDial from "~/islands/DemoDial";
+import DemoPanel from "~/islands/DemoPanel";
+import { ButtonLink } from "~/ui/Button";
+import { BUNDLES, formatGBP } from "~/lib/preorder";
+import { ArrowRightIcon as ArrowRight, CheckIcon as Check, LeafIcon as Leaf, PlugsConnectedIcon as PlugsConnected, SquaresFourIcon as SquaresFour } from "@phosphor-icons/react/ssr";
+
+const rooms = ["Living room", "Kitchen", "Bedroom", "Office", "Bathroom"];
+
+const specs = [
+  {
+    title: "The hub",
+    rows: [
+      ["Size", "12 × 13 cm, 3 cm deep"],
+      ["Display", "Round glass, readable across a room"],
+      ["Controls", "Turnable ring, touch display"],
+      ["Power", "USB-C, or wired to a wall box"],
+    ],
+  },
+  {
+    title: "Connects to",
+    rows: [
+      ["Wireless", "Wi-Fi 6, Thread, Bluetooth for setup"],
+      ["Standards", "Matter controller and Thread border router"],
+      ["Wired", "Ethernet (optional)"],
+    ],
+  },
+  {
+    title: "Heating",
+    rows: [
+      ["Boilers", "Combi and system boilers, on/off or OpenTherm"],
+      ["Heat pumps", "Most models with an on/off or OpenTherm input"],
+      ["Radiators", "Thermo smart valves, M30 × 1.5 thread"],
+    ],
+  },
+  {
+    title: "Use it from",
+    rows: [
+      ["Screens", "Web, iPhone, Android, wall tablet"],
+      ["Voice", "Any Matter voice assistant"],
+      ["Offline", "Schedules keep running without the internet"],
+    ],
+  },
+];
+
+const faq = [
+  {
+    q: "Do I need a new boiler?",
+    a: "No. Thermo replaces your wall thermostat and works with combi and system boilers and most heat pumps. The smart valves replace the heads on your radiators.",
+  },
+  {
+    q: "Do I need the radiator valves?",
+    a: "Only if you want each room at its own temperature. With the hub alone, the whole home follows one target and one schedule.",
+  },
+  {
+    q: "What if the internet goes down?",
+    a: "The hub keeps running your schedules on its own. The app shows the last known state with an Offline banner, and controls come back as soon as it reconnects.",
+  },
+  {
+    q: "Is it easy for the whole family?",
+    a: "Every control has a written label, the numbers are large, and a high-contrast mode swaps soft shadows for solid borders. We test every release with people over 65.",
+  },
+  {
+    q: "When will it ship, and when do I pay?",
+    a: "Pre-orders ship in early 2027. Reserving is free. We email you to confirm payment before anything is sent, and you can cancel at any time before then.",
+  },
+];
+---
+<Site
+  title="Thermo: your home, at your fingertips"
+  description="Thermo is one soft, simple dial for your heating, lights and blinds. Pre-order the hub from £179."
+>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title">Your home, at your fingertips.</h1>
+      <p class="lede">One soft, simple dial for heating, lights and blinds. Clear enough for everyone at home to use.</p>
+      <div class="ctas">
+        <ButtonLink href="/pre-order" variant="primary" size="lg">Pre-order from £179</ButtonLink>
+        <ButtonLink href="/how-it-works" size="lg">How it works</ButtonLink>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hub-shot">
+        <HubRender />
+      </div>
+      <div class="demo-dial">
+        <DemoDial client:load />
+        <p class="try" id="try-hint">Try it: drag the ring, press Cooler or Warmer, or use the arrow keys.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits wrap" aria-labelledby="benefits-title">
+    <h2 id="benefits-title" class="section-title">Why Thermo</h2>
+    <div class="bento">
+      <article class="tile save surface-raised">
+        <div class="well" aria-hidden="true"><Leaf weight="bold" /></div>
+        <h3>Save energy</h3>
+        <p>Eco mode and room schedules keep the heating off where nobody is. The weekly chart shows exactly what each day used.</p>
+        <svg class="mini-chart" viewBox="0 0 280 110" aria-hidden="true">
+          {[42, 58, 36, 50, 64, 30, 22].map((h, i) => (
+            <rect x={i * 40 + 8} y={110 - h * 1.5} width="24" height={h * 1.5} rx="4" fill={i === 6 ? "var(--warm-ink)" : "var(--cool-ink)"} opacity={i === 6 ? 1 : 0.85}></rect>
+          ))}
+        </svg>
+      </article>
+      <article class="tile rooms surface-raised">
+        <div class="well" aria-hidden="true"><SquaresFour weight="bold" /></div>
+        <h3>Every room</h3>
+        <p>Each room gets its own temperature, lights and blinds, and one tap sets a whole scene.</p>
+        <ul class="chips" role="list">
+          {rooms.map((r) => <li>{r}</li>)}
+        </ul>
+      </article>
+      <article class="tile matter surface-pressed">
+        <div class="well matter-well" aria-hidden="true"><PlugsConnected weight="bold" /></div>
+        <h3>Works with Matter</h3>
+        <p>Use the lights and blinds you already own from any Matter brand. No extra bridges.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="demo wrap" aria-labelledby="demo-title">
+    <div class="demo-head">
+      <h2 id="demo-title" class="section-title">Try the living room</h2>
+      <p>This is the real control panel, running on pretend devices. Nothing here needs an account.</p>
+    </div>
+    <DemoPanel client:visible />
+    <p class="demo-more">
+      <a href="/app">Open the whole-home dashboard demo <ArrowRight weight="bold" aria-hidden="true" /></a>
+    </p>
+  </section>
+
+  <section class="specs wrap" aria-labelledby="specs-title">
+    <h2 id="specs-title" class="section-title">Specs and compatibility</h2>
+    <div class="spec-grid">
+      {specs.map((group) => (
+        <div class="spec surface-pressed">
+          <h3>{group.title}</h3>
+          <dl>
+            {group.rows.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pricing wrap" aria-labelledby="pricing-title">
+    <h2 id="pricing-title" class="section-title">Pricing</h2>
+    <div class="plans">
+      {BUNDLES.map((b, i) => (
+        <article class:list={["plan", "surface-raised", { featured: i === 1 }]} aria-labelledby={`plan-${b.id}`}>
+          <h3 id={`plan-${b.id}`}>{b.name}</h3>
+          <p class="price"><span class="tabular">{formatGBP(b.price)}</span></p>
+          <p class="plan-detail">{b.detail}</p>
+          <ul class="plan-list" role="list">
+            <li><Check weight="bold" aria-hidden="true" /> Hub with wall stand and USB-C power</li>
+            <li><Check weight="bold" aria-hidden="true" /> Web, phone and wall tablet apps</li>
+            {i === 1 ? (
+              <li><Check weight="bold" aria-hidden="true" /> 4 smart radiator valves with adapters</li>
+            ) : (
+              <li><Check weight="bold" aria-hidden="true" /> Add valves later from £32 each</li>
+            )}
+            <li><Check weight="bold" aria-hidden="true" /> No subscription</li>
+          </ul>
+          <ButtonLink href={`/pre-order?bundle=${b.id}`} variant={i === 1 ? "primary" : "raised"}>
+            Pre-order
+          </ButtonLink>
+        </article>
+      ))}
+    </div>
+    <p class="price-note">Free delivery in the UK. Reserving is free; you pay when it ships.</p>
+  </section>
+
+  <section class="faq wrap" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="section-title">Questions</h2>
+    <Faq items={faq} />
+  </section>
+</Site>
+
+<style>
+  .section-title {
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  section.wrap + section.wrap {
+    margin-top: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  /* Hero: copy left, product and the working dial right. */
+  .hero {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+    padding-top: clamp(1.5rem, 1rem + 3vw, 4rem);
+  }
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      min-height: calc(100dvh - 5rem);
+      max-height: 56rem;
+    }
+  }
+  h1 {
+    font-size: var(--fs-headline);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 12ch;
+  }
+  .lede {
+    margin-top: 1.25rem;
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    color: var(--text-mute);
+    max-width: 34ch;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    margin-top: 2rem;
+  }
+
+  .hero-visual {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+  .hub-shot {
+    width: min(15rem, 55%);
+  }
+  .try {
+    margin-top: 0.75rem;
+    text-align: center;
+    color: var(--text-mute);
+    font-size: var(--fs-label);
+    max-width: 30ch;
+  }
+  @media (min-width: 960px) {
+    .hero-visual {
+      grid-template-columns: 1fr;
+      min-height: 34rem;
+    }
+    .hub-shot {
+      position: absolute;
+      left: 0;
+      bottom: 1rem;
+      width: 17rem;
+    }
+    .demo-dial {
+      position: relative;
+      z-index: 1;
+      justify-self: end;
+      align-self: start;
+      margin-right: 1rem;
+    }
+  }
+  @media (max-width: 959px) {
+    .hero-visual {
+      grid-template-columns: 1fr;
+    }
+    .hub-shot {
+      order: 2;
+    }
+  }
+
+  /* Benefits: asymmetric bento, one wide tile and two stacked. */
+  .bento {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 860px) {
+    .bento {
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .save {
+      grid-row: span 2;
+    }
+  }
+  .tile {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: 1.75rem;
+  }
+  .tile h3 {
+    font-size: var(--fs-room);
+  }
+  .tile p {
+    color: var(--text-mute);
+    max-width: 44ch;
+  }
+  .well {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    font-size: 1.625rem;
+    color: var(--on-ink);
+    box-shadow: var(--pressed-sm);
+    border: var(--bw) solid var(--edge);
+  }
+  .rooms .well {
+    color: var(--cool-ink);
+  }
+  .mini-chart {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    width: 100%;
+    max-width: 22rem;
+  }
+  .save {
+    display: flex;
+    flex-direction: column;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .chips li {
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--radius-control);
+    box-shadow: var(--raised-sm);
+    border: var(--bw) solid var(--edge);
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+  .matter-well {
+    color: var(--text);
+    box-shadow: var(--raised-sm);
+  }
+
+  /* Demo */
+  .demo-head {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .demo-head .section-title {
+    margin-bottom: 0;
+  }
+  .demo-head p {
+    color: var(--text-mute);
+    max-width: 55ch;
+  }
+  .demo-more {
+    margin-top: 1.5rem;
+  }
+  .demo-more a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: var(--target);
+    font-weight: 800;
+  }
+
+  /* Specs: four grouped clusters instead of one long table. */
+  .spec-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 760px) {
+    .spec-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .spec {
+    padding: 1.5rem;
+  }
+  .spec h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .spec dl {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+  }
+  .spec dt {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-mute);
+  }
+  .spec dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* Pricing */
+  .plans {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 760px) {
+    .plans {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 60rem;
+    }
+  }
+  .plan {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    justify-items: start;
+    padding: 2rem;
+  }
+  .plan.featured {
+    border: 2px solid var(--warm-ink);
+  }
+  .plan h3 {
+    font-size: 1.375rem;
+  }
+  .price {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .plan-detail {
+    color: var(--text-mute);
+  }
+  .plan-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+  .plan-list li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .plan-list :global(svg) {
+    flex: none;
+    color: var(--on-ink);
+    transform: translateY(0.15em);
+  }
+  .price-note {
+    margin-top: 1.25rem;
+    color: var(--text-mute);
+  }
+
+  .faq {
+    max-width: 52rem;
+  }
+</style>

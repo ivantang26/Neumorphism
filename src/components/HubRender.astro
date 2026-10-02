@@ -1,0 +1,83 @@
+---
+// Product render of the Thermo hub. Stands in for the hub photograph in the PRD
+// until real photography exists: a rounded aluminium body with a turnable bezel
+// around a round glass display. Drawn with the page tokens so it sits in the surface.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+<svg class:list={["hub", className]} viewBox="0 0 400 430" role="img" aria-labelledby="hub-title">
+  <title id="hub-title">The Thermo hub: a rounded square with a turnable ring around a round display showing 21.5 degrees.</title>
+  <defs>
+    <linearGradient id="hub-body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4f7fb"></stop>
+      <stop offset="1" stop-color="#cfd7e2"></stop>
+    </linearGradient>
+    <linearGradient id="hub-bezel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9d2de"></stop>
+      <stop offset="0.5" stop-color="#eef2f7"></stop>
+      <stop offset="1" stop-color="#b9c3d1"></stop>
+    </linearGradient>
+    <radialGradient id="hub-glass" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#344056"></stop>
+      <stop offset="0.6" stop-color="#1b2230"></stop>
+      <stop offset="1" stop-color="#121722"></stop>
+    </radialGradient>
+    <radialGradient id="hub-shine" cx="0.3" cy="0.2" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.18"></stop>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"></stop>
+    </radialGradient>
+    <filter id="hub-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="18" dy="22" stdDeviation="20" flood-color="#8d99ab" flood-opacity="0.55"></feDropShadow>
+      <feDropShadow dx="-14" dy="-14" stdDeviation="16" flood-color="#ffffff" flood-opacity="0.9"></feDropShadow>
+    </filter>
+    <filter id="hub-inset">
+      <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+    </filter>
+  </defs>
+
+  <ellipse cx="206" cy="398" rx="150" ry="14" fill="#9aa6b8" opacity="0.35" filter="url(#hub-inset)"></ellipse>
+
+  <!-- Body -->
+  <rect x="50" y="40" width="300" height="330" rx="70" fill="url(#hub-body)" filter="url(#hub-shadow)"></rect>
+  <rect x="50.75" y="40.75" width="298.5" height="328.5" rx="69.5" fill="none" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1.5"></rect>
+
+  <!-- Recessed well and turnable bezel -->
+  <circle cx="200" cy="190" r="118" fill="#d3dae4"></circle>
+  <circle cx="200" cy="190" r="118" fill="none" stroke="#a9b4c4" stroke-width="6" filter="url(#hub-inset)" opacity="0.8"></circle>
+  <circle cx="200" cy="190" r="104" fill="url(#hub-bezel)"></circle>
+  <g stroke="#9aa6b8" stroke-width="1.4" opacity="0.7">
+    {Array.from({ length: 60 }, (_, i) => {
+      const a = (i * 6 * Math.PI) / 180;
+      return (
+        <line
+          x1={200 + Math.sin(a) * 96}
+          y1={190 - Math.cos(a) * 96}
+          x2={200 + Math.sin(a) * 102}
+          y2={190 - Math.cos(a) * 102}
+        ></line>
+      );
+    })}
+  </g>
+
+  <!-- Glass display -->
+  <circle cx="200" cy="190" r="84" fill="url(#hub-glass)"></circle>
+  <path d="M 150.5 239.5 A 70 70 0 1 1 249.5 239.5" fill="none" stroke="#2a3342" stroke-width="7" stroke-linecap="round"></path>
+  <path d="M 150.5 239.5 A 70 70 0 0 1 237 131" fill="none" stroke="#ff7a45" stroke-width="7" stroke-linecap="round"></path>
+  <text x="200" y="176" text-anchor="middle" fill="#9aa6b8" font-family="var(--font)" font-size="14" font-weight="700">Heating to</text>
+  <text x="196" y="220" text-anchor="middle" fill="#f4f7fb" font-family="var(--font)" font-size="46" font-weight="800">21.5°</text>
+  <circle cx="200" cy="190" r="84" fill="url(#hub-shine)"></circle>
+
+  <!-- Status light -->
+  <circle cx="200" cy="336" r="5" fill="#2fbf71"></circle>
+  <circle cx="200" cy="336" r="9" fill="none" stroke="#2fbf71" stroke-opacity="0.35" stroke-width="3"></circle>
+</svg>
+
+<style>
+  .hub {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import Site from "~/layouts/Site.astro";
+import { ButtonLink } from "~/ui/Button";
+---
+<Site title="Page not found · Thermo" description="This page doesn't exist.">
+  <section class="wrap nf">
+    <h1>We can't find that page</h1>
+    <p>The link may be old, or the address may have a typo.</p>
+    <ButtonLink href="/" variant="primary">Go to the home page</ButtonLink>
+  </section>
+</Site>
+
+<style>
+  .nf {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding-top: 4rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  p {
+    color: var(--text-mute);
+    font-size: 1.125rem;
+  }
+</style>

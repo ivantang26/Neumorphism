@@ -1,0 +1,199 @@
+---
+import Site from "~/layouts/Site.astro";
+import HubRender from "~/components/HubRender.astro";
+import ContrastCompare from "~/islands/ContrastCompare";
+import { ButtonLink } from "~/ui/Button";
+import { DeviceTabletCameraIcon as DeviceTabletCamera, ShieldCheckIcon as ShieldCheck, WifiHighIcon as WifiHigh } from "@phosphor-icons/react/ssr";
+
+const steps = [
+  {
+    title: "Fit the hub",
+    body: "It replaces your wall thermostat: two wires to the boiler, or none at all with a heat pump over OpenTherm. Screw the valves onto your radiators by hand.",
+  },
+  {
+    title: "Pair in the Thermo app",
+    body: "The phone app finds the hub over Bluetooth, then adds your valves and any Matter lights or blinds. It takes about ten minutes.",
+  },
+  {
+    title: "Use it anywhere",
+    body: "Turn the ring on the hub, open the dashboard on a phone or computer, or mount a tablet in the hallway as a wall panel for the whole family.",
+  },
+];
+---
+<Site title="How Thermo works" description="Fit the hub, pair your devices, and control heating, lights and blinds from anywhere.">
+  <section class="intro wrap" aria-labelledby="title">
+    <div>
+      <h1 id="title">Set up in an afternoon.</h1>
+      <p class="lede">No new boiler, no subscription. The hub runs your home on its own, even when the internet doesn't.</p>
+    </div>
+    <div class="shot"><HubRender /></div>
+  </section>
+
+  <section class="steps wrap" aria-labelledby="steps-title">
+    <h2 id="steps-title" class="section-title">Three things to do</h2>
+    <ol class="step-list">
+      {steps.map((s, i) => (
+        <li class="step">
+          <span class="num tabular" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="contrast wrap" aria-labelledby="contrast-title">
+    <h2 id="contrast-title" class="section-title">Soft to look at. Clear to use.</h2>
+    <p class="section-lede">
+      Soft shadows alone are hard to see, so every control has a darker ring, a written label and a written state.
+      If that still isn't enough, high contrast swaps the shadows for solid borders. It turns on by itself when your
+      device asks for more contrast.
+    </p>
+    <ContrastCompare client:visible />
+  </section>
+
+  <section class="features wrap" aria-labelledby="features-title">
+    <h2 id="features-title" class="section-title">Built for the hallway wall</h2>
+    <div class="feature-grid">
+      <article class="feature wide surface-raised">
+        <div class="well" aria-hidden="true"><DeviceTabletCamera weight="bold" /></div>
+        <h3>Wall tablet mode</h3>
+        <p>
+          Any 10 inch tablet becomes a wall panel: controls 20% larger, full screen, dimmed after two minutes and awake
+          with a tap. The first tap only wakes it, so nothing changes by accident.
+        </p>
+        <ButtonLink href="/app?kiosk=1">Try wall tablet mode</ButtonLink>
+      </article>
+      <article class="feature surface-pressed">
+        <div class="well" aria-hidden="true"><WifiHigh weight="bold" /></div>
+        <h3>Every screen in step</h3>
+        <p>Change the kitchen on your phone and the wall panel shows it within a second.</p>
+      </article>
+      <article class="feature surface-pressed">
+        <div class="well" aria-hidden="true"><ShieldCheck weight="bold" /></div>
+        <h3>Works offline</h3>
+        <p>Schedules run on the hub. If the connection drops, screens say so plainly and wait.</p>
+      </article>
+    </div>
+  </section>
+</Site>
+
+<style>
+  .section-title {
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+    margin-bottom: 1.5rem;
+  }
+  section.wrap + section.wrap {
+    margin-top: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+  .intro {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 2rem;
+  }
+  @media (min-width: 860px) {
+    .intro {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  h1 {
+    font-size: var(--fs-headline);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+  }
+  .lede,
+  .section-lede {
+    margin-top: 1.25rem;
+    color: var(--text-mute);
+    font-size: 1.1875rem;
+    max-width: 44ch;
+  }
+  .section-lede {
+    margin: -0.5rem 0 2rem;
+    max-width: 62ch;
+  }
+  .shot {
+    width: min(18rem, 70%);
+    justify-self: center;
+  }
+
+  .step-list {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  @media (min-width: 900px) {
+    .step-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .step {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  .num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    font-size: 1.375rem;
+    font-weight: 800;
+    box-shadow: var(--raised-sm);
+    border: var(--bw) solid var(--edge-strong);
+  }
+  .step h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.375rem;
+  }
+  .step p,
+  .feature p {
+    color: var(--text-mute);
+  }
+
+  .feature-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 860px) {
+    .feature-grid {
+      grid-template-columns: 1.3fr 1fr;
+    }
+    .wide {
+      grid-row: span 2;
+    }
+  }
+  .feature {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    justify-items: start;
+    padding: 1.75rem;
+  }
+  .feature h3 {
+    font-size: var(--fs-room);
+  }
+  .well {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    font-size: 1.625rem;
+    color: var(--cool-ink);
+    box-shadow: var(--pressed-sm);
+    border: var(--bw) solid var(--edge);
+  }
+  .surface-pressed .well {
+    box-shadow: var(--raised-sm);
+  }
+</style>

@@ -1,0 +1,112 @@
+.dashboard {
+  display: grid;
+  gap: calc(var(--gap) * 1.25);
+  align-items: start;
+}
+
+.sectionTitle {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--text-mute);
+}
+
+.dialCard {
+  display: grid;
+  justify-items: center;
+  gap: var(--gap);
+  text-align: center;
+}
+.dialCard .sectionTitle {
+  justify-self: start;
+}
+.dialStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 700;
+  font-size: var(--fs-label);
+}
+.flame {
+  color: var(--warm-ink);
+}
+.modeHint {
+  color: var(--text-mute);
+  font-size: var(--fs-label);
+  max-width: 30ch;
+}
+
+/* Scenes: horizontal scroll on phones, a row of four on tablets (PRD §6). */
+.scenes {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.sceneRow {
+  display: flex;
+  gap: var(--gap);
+  margin: 0;
+  /* Room for the soft shadows, which overflow would otherwise clip. */
+  padding: 0.75rem 1rem 1.25rem;
+  margin-inline: -1rem;
+  margin-block: -0.75rem -1.25rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.sceneRow::-webkit-scrollbar {
+  display: none;
+}
+.sceneRow > li {
+  scroll-snap-align: start;
+  flex: none;
+}
+.sceneButton {
+  width: 100%;
+}
+@media (min-width: 700px) {
+  /* A row of four; wraps rather than overflows when kiosk mode enlarges the labels. */
+  .sceneRow {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+  }
+  .sceneRow > li {
+    flex: 1 1 0;
+    min-width: max-content;
+  }
+}
+
+.roomsSection {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.rooms {
+  display: grid;
+  gap: var(--gap);
+}
+@media (min-width: 700px) {
+  .rooms {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+ * Desktop: dial in a left column, rooms beside it. Three columns once there is
+ * room for them (PRD §6); the grid drops a column rather than squeeze cards when
+ * the room side panel is open.
+ */
+@media (min-width: 1200px) {
+  .dashboard {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .dialCard {
+    position: sticky;
+    top: var(--gap);
+  }
+  .rooms {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}

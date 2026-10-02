@@ -1,0 +1,34 @@
+.card {
+  position: relative;
+  min-width: 0;
+  background: var(--base);
+  border-radius: var(--radius-card);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--shadow);
+}
+.card[data-inset] {
+  box-shadow: var(--pressed);
+}
+.card[data-active] {
+  border-color: var(--cool-ink);
+  outline: 2px solid var(--cool-ink);
+  outline-offset: -3px;
+}
+
+.card[data-padding="sm"] {
+  padding: 1rem;
+}
+.card[data-padding="md"] {
+  padding: 1.25rem;
+}
+.card[data-padding="lg"] {
+  padding: 1.5rem;
+}
+@media (min-width: 700px) {
+  .card[data-padding="md"] {
+    padding: 1.5rem;
+  }
+  .card[data-padding="lg"] {
+    padding: 2rem;
+  }
+}
